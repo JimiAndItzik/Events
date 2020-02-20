@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css"
 
 import Navbar           from "./components/mainNavBar/mainnavbar.component";
@@ -15,10 +15,13 @@ function App() {
             <div className="container">
                 {/* <Navbar /> */}
                 <br />
+                <Switch>
                 <Route path="/" exact component={EventsList} />
                 <Route path="/login" exact component={Login} />
                 <Route path="/createUser" component={CreateUser} />
                 <Route path="/createCompany" component={CreateCompany} />
+                <Route path="*" component={() => "404 NOT FOUND"}/>
+                </Switch>
             </div>
         </Router>
   );
