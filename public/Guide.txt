@@ -1,0 +1,27 @@
+1) validate that node installed with "node -v"
+2) nevigate to the desired path and create the project with "npx create-react-app"
+3) create "backend" folder inside the project folder.
+4) install the next packages inside backend "npm install express cors mongoose dotenv"
+5) "npm install -g nodemoon"
+6) create "server.js" inside backend
+7) create models, routes etc...
+
+8) npm install axios --save
+9) npm install bootstrap
+10) npm install react-router-dom
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------
+Backend:
+1) npm i install express cors mongoose dotenv jsonwebtoken bcryptjs express-validator
+2) npm i install -D nodemon concurrently
+
+front:
+1) npm install axios
+2) npm install bootstrap
+3) npm install react-router-dom
