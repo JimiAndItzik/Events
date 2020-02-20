@@ -13,48 +13,32 @@ const User = require("../models/User.model");
 router.post(
   "/",
   [
-    check("firstName", "First Name Is Required!") // from documentation - check each paramter from User model if its valid
-      .not()
-      .isEmpty(),
-    check("lastName", "Last Name Is Required!") // from documentation - check each paramter from User model if its valid
-    .not()
-    .isEmpty(),
     check("email", "Please Enter Your Email Address").isEmail(),
     check(
       "password",
       "Please enter valid password with 6 or more characters"
-    ).isLength({ min: 6 }),
-    check("role", "Role Is Required!") // from documentation - check each paramter from User model if its valid
-      .not()
-      .isEmpty(),
-      check("phone", "Phone Is Required!") // from documentation - check each paramter from User model if its valid
-      .not()
-      .isEmpty(),
-
+    ).exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req); //save all errors in array - then check if the array is empty
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { firstName, lastName, email, password, role, phone, address } = req.body;
+    const { email, password} = req.body;
 
     try {
       // check if user exist
       let user = await User.findOne({ email });
-      if (user) {
-        res.status(400).json({ errors: [{ msg: "User already exists" }] });
+      if (!user) {
+        return res.status(400).json({ errors: [{ msg: "User NOT exists" }] });
       }
       
-      // define new user
-      user = new User({ firstName, lastName, email, password, role, phone, address });
-
-      // encrypt passwaord using bcrypt
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(password, salt);
-      // save user to the db
-      await user.save();
-
+      const isPassMatch = await bcrypt.compare(password,user.password);
+      if(!isPassMatch)
+      {
+        return res.status(400).json({ errors: [{ msg: "Invalid Password!" }] });
+      }
+     
       //return JSON WEB TOKEN
       const payload = {
         user: {
@@ -67,20 +51,19 @@ router.post(
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          res.json({ token, role:user.role });
         }
       );
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server Error:" + err);
     }
+    // router.route('/').get((req, res) => {
+    //     User.find()
+    //         .then(users => res.json(users))
+    //         .catch(err => res.status(400).json('Error: ' + err));
+    //   });
   }
 );
-
-router.route('/').get((req, res) => {
-  User.find()
-      .then(users => res.json(users))
-      .catch(err => res.status(400).json('Error: ' + err));
-});
 
 module.exports = router;

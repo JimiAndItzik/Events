@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import Navbar           from "./mainnavbar.component";
 
 const Exercise = props => (
 	<tr>
@@ -51,7 +52,8 @@ export default class EventsList extends Component {
 	// }
 	render() {
 		return (
-			<div>
+			<div className="container">
+                <Navbar />
 				<h3> Inside Events List component</h3>
 			</div>
 			)

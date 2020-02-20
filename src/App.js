@@ -6,15 +6,17 @@ import Navbar           from "./components/mainNavBar/mainnavbar.component";
 import CreateUser       from "./components/mainNavBar/create-user.component";
 import EventsList    from "./components/mainNavBar/events-list.component";
 import CreateCompany from "./components/mainNavBar/create-company.component";
+import Login from "./components/login.component";
 
 
 function App() {
     return (
         <Router>
             <div className="container">
-                <Navbar />
+                {/* <Navbar /> */}
                 <br />
                 <Route path="/" exact component={EventsList} />
+                <Route path="/login" exact component={Login} />
                 <Route path="/createUser" component={CreateUser} />
                 <Route path="/createCompany" component={CreateCompany} />
             </div>

@@ -16,6 +16,7 @@ connectDB();
 app.use('/users', require("./routes/users.route"));
 app.use('/companies', require("./routes/companies.route"));
 app.use('/events', require("./routes/events.route"));
+app.use('/login', require("./routes/login.route"));
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
