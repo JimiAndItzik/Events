@@ -6,7 +6,7 @@ require('dotenv').config();
 //const config = require("config");
 const { check, validationResult } = require("express-validator");
 const User = require("../models/User.model");
-
+import "../config/config";
 // @route   POST api/user
 // @desc    Register User , authenticate user and get json web token
 // @access  Public
@@ -63,7 +63,7 @@ router.post(
       };
       jwt.sign(
         payload,
-        "myToken",
+        secretAuth,
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
